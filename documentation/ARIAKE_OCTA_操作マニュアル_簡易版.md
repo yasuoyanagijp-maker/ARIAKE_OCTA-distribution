@@ -50,19 +50,64 @@ MNV 解析などを始める際の **フォルダ／ファイル選択** から�
    - **（任意）0. Crop Image** — **横に広い画像**では、最初からこのモードが選ばれることがあります。ドラッグで四角く囲み、**「クロップ確定」** で切り出します。やり直すときは **「元画像に戻す」** があります。  
    - **1. Draw ROI（フリーハンド）** — 画像上でドラッグし、**MNV を含む領域をなぞって囲みます**（指を離すと、選んだ部分が緑の半透明で重なります）。囲み終えると、**自動的に「2. Erase Noise」のモード**に切り替わります。  
    - **2. Erase Noise（長押し）** — **緑で示した領域の内側**で、不要な暗いノイズや背景の隙間の上を **長押し**して取り除きます。  
+   - **着色画像**（任意）— アプリが同定した血管を表示します（**黄＝血管、赤＝拡張**。このあいだ緑の ROI 塗りは非表示）。**余白trim → 採用** で、着色のない余白だけを ROI から除けます。背景血管の削除と、切り落とした血管の追加は、これまでどおり Draw / Erase です。手順の正本は **[roi_method.md](roi_method.md)**。  
    - 操作のやり直しは **Undo**（直前のみ戻る）や **Reset**（マスクをまっさらに戻す）を使います。  
    - 緑の領域が問題なければ、右上の **「Confirm ROI & Proceed」**（再解析のときは **「Confirm & Re-analyze」**）で次の画面へ進みます。**ROI が空のままでは進めません。**  
 3. **MNV ウィザード**でプレビューを確認し、案内に従い **解析の実行**（**Confirm & Start Analysis** 等）へ進みます。  
 4. 完了後、**結果画面**に進み、**一覧またはサイドバーで症例ごと（各解析ごと）**の数値・画像・グラフを確認します。  
-5. 内容に問題がある場合は、**ROI のやり直し（Redo ROI 等）**や、結果画面の **再解析（Re-analyze）** から同じ画像でやり直し、結果を上書きできることがあります。
+   - **Complexity**（Network Complexity）と **Uniformity**（Caliber Uniformity）は層別 **PCA** に基づく 0–100 スコアです。定義・パラメータは詳細マニュアル **§6.3** を参照。  
+   - **Save CSV** / **Export Metadata & Data**（生画像・ROI マスク・meta.json）で結果を保存できます。  
+   - 二重読影や GakuNin RDM 同期が必要な場合は、結果画面の **ログアウト** / **GakuNin RDMへ同期** / **統合解析データ** を使います（詳細は USER_MANUAL **§6A・§10.2〜§10.4**）。  
+5. 内容に問題がある場合は、**ROI のやり直し（Redo ROI 等）**や、結果画面の **再解析（Re-analyze）** から同じ画像でやり直し、結果を上書きできることがあります。Uniformity が **25.0** と出た場合は再解析を検討してください。
 
 バッチ解析のときは、フォルダ内の複数枚を順に処理し、**最後にまとめて結果画面**で各症例を切り替えながら確認する流れになります。バッチ途中では **OK — next image**／**Redo ROI**／**Stop Here** で品質を確認しながら進みます。
+
+---
+
+## 4A. 二重読影の早見（詳細は USER_MANUAL）
+
+研究では **観察時点の定量**と、その後の **治療前後変化・関連因子の探索** を分けて進めます。読影は原則 **2 名独立**です。
+
+| 施設の状況 | 操作の流れ（要約） |
+|------------|-------------------|
+| **読影者 2 名（施設内）** | 第1: Save CSV → Export Metadata → ログアウト → 第2: Role「第2リーダー」→ **ローカル自動スキャン** → ROI（**Confirm ROI & Proceed**）→ 解析（**Confirm & Start Analysis**）→ Save CSV → **統合解析データ**（RPD≤20% で平均、超過は NA） |
+| **読影者 1 名のみ** | 第1: Save CSV → Export Metadata → 結果画面のまま **`output_folder` を GakuNin RDMへ同期**（この時点ではログアウトしない）→ 中央は Institution **`TEAM_YY`**（※`YOKOHAMA_CITY_UNIV` ではない）で取得して第2読影 → **統合解析データ**（ローカル `integrated_output_*`）→ 必要なら **第2の `output_folder` だけ**を `second_reading/{施設}/` へ同期（採用 CSV は自動では上がらない）→ 作業後にログアウト |
+
+- 一般施設の GakuNin 取得は **自施設のみ**。横断選択は **`TEAM_YY` のみ**。  
+- アプリの統合は `File`/`ID` stem 突合。CLI（Case+Visit）とは別経路。  
+- ボタン名やフォルダ配置の手順書: [USER_MANUAL.md](../USER_MANUAL.md) §6A・§10.2〜§10.4  
+- 各サイト／Team YY への協働通知: [collaboration.md](collaboration.md)  
 
 ---
 
 ## 5. 問い合わせの例（返信用メモ）
 
 > スクリーンショットの画面では、画像をダブルクリックするのではなく、画面上の **「Confirm Selection」** ボタンを押して進んでください。一度クリックでファイルが選ばれたあと、そのボタンで確定となります。
+
+---
+
+## 6. 関連ドキュメント
+
+| 内容 | リンク |
+|------|--------|
+| 起動・ログイン・二重読影・GakuNin | [USER_MANUAL.md](../USER_MANUAL.md)（§6A・§10.2〜§10.4） |
+| 各サイト／Team YY グレーディング通知 | [collaboration.md](collaboration.md) |
+| ROI の指定（手動囲み・Erase・着色画像／余白trim） | [roi_method.md](roi_method.md) |
+| Complexity / Caliber Uniformity（パラメータ含む） | [詳細マニュアル §6.3](ARIAKE_OCTA_詳細ユーザーマニュアル_V2.md#63-network-complexity--caliber-uniformity現行-flet-版--正) |
+| RPD20 採用（CLI） | [tools/reading_center_rpd/PROCEDURE_JA.md](../tools/reading_center_rpd/PROCEDURE_JA.md) |
+
+---
+
+## 7. 変更履歴
+
+| 日付 | 内容 |
+|------|------|
+| 2026-08-21 | ROI に着色画像／余白trim を追記。[collaboration.md](collaboration.md)・[roi_method.md](roi_method.md) へのリンクを追加。 |
+| 2026-08-12 | 1名ルート: 同期前にログアウトしない旨を明記（「同上」の誤解を解消）。 |
+| 2026-08-12 | Bugbot 指摘反映: 同期は `output_folder` のみ・integrated 非対象、`TEAM_YY` 明示、ROI 正式ボタン名。 |
+| 2026-08-12 | **§4A** 二重読影・GakuNin 早見を追加。結果画面ボタンと USER_MANUAL 詳細節へのリンクを更新。 |
+| 2026-08-07 | 結果画面の Complexity／Uniformity（PCA）・Save CSV／Export Metadata・Uniformity=25.0 の注意、関連ドキュメントへのリンクを追加。 |
+| （既往） | Confirm Selection、画像形式、MNV ROI 手順の要点を記載。 |
 
 ---
 
