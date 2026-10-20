@@ -9,7 +9,7 @@
 | 項目 | ImageJ マクロ版 | 本アプリ（Flet 版） |
 |------|-----------------|---------------------|
 | UI | マクロのダイアログ・ImageJ Log | **ログイン → ダッシュボード → ROI / ウィザード → 結果**（[USER_MANUAL.md](../USER_MANUAL.md)） |
-| 起動・配布 | ImageJ から実行 | **macOS**: `インストール.command` + `ARIAKE_OCTA.app` 等（[README.md](../README.md)） |
+| 起動・配布 | ImageJ から実行 | **macOS**: [v1.2.4-mac](https://github.com/yasuoyanagijp-maker/MNV_analysis_pro/releases/tag/v1.2.4-mac) の ZIP（本リポジトリの `v1.2.3-mac` は廃止。[README.md](../README.md)） |
 | VD サフィックス | 固定の `_1` / `_2` 想定が中心 | ダッシュボードの **VD sup. / deep suffix** で変更可能（既定 `1.tif` / `2.tif`） |
 | MNV 混在フォルダ | 「Analysis Mode Selection」で Yes/No | **MNV フォルダバッチ**時、`*1/*2/*4` および `image1/2/4` パターンを除外した残りをキュー化。除外後ゼロ件なら **フォルダ内全画像**にフォールバック（`src/utils/batch_input_filter.py`） |
 | バッチ後の QC | 各画像ごと「Yes / Quality is low」ダイアログ、`To_be_reanalyzed` への 4 倍拡大保存等 | **MNV フォルダバッチ**では解析直後に結果画面へ進み、**「OK — next image」「Redo ROI」「Stop Here」**でレビュー（`results_screen.py`）。**自動 4 倍拡大と専用サブフォルダ出力はマクロ版と同一ではない**場合があります。低品質時は **ROI のやり直し**、**結果画面の再解析**、必要なら **画像解像度の前処理**および **Image Scale (mm)** の見直しを推奨します。 |
