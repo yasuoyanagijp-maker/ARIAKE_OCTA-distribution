@@ -215,7 +215,7 @@ project_id / folder_id はダッシュボードの **Advanced Settings**、ま�
 | 統合解析データで第1 CSV が見つからない | 第1が Save CSV したファイルが同期／スキャン対象に含まれているか |
 | 採用 CSV が GakuNin に無い | **仕様どおり**。同期は `output_folder` のみ |
 | PAT を保存できない | OS のキーリング／資格情報ストアが使えるか |
-| ログインで「Connection Error: All connection attempts failed」 | **GakuNin やパスワードの問題ではない。** 同じ PC 内の解析エンジンに届いていない。**Mac** ならまず Terminal で `xattr -cr /Applications/ARIAKE_OCTA.app` と `codesign --force --deep --sign - /Applications/ARIAKE_OCTA.app`（新ZIP不要。`xattr` だけでは不十分）。`CODESIGNING Invalid Page` ならこの原因。病院業務用 Windows のファイアウォールでも同型の失敗あり |
+| ログインで「Connection Error: All connection attempts failed」 | **GakuNin やパスワード・施設コードの問題ではない。** 同じ PC 内の解析エンジンに届いていない。**本リポジトリの `v1.2.3-mac` は廃止。** Mac は [v1.2.4-mac](https://github.com/yasuoyanagijp-maker/MNV_analysis_pro/releases/tag/v1.2.4-mac) に入れ直す（古いアプリ削除 → 再DL → `インストール.command` を右クリック「開く」。ターミナル再署名は不要）。[手順](mac_v1.2.3_connection_error.md)。病院業務用 Windows のファイアウォールでも同型の失敗あり |
 | 別施設のパスに書き出された | 前回の Team YY セッションが残っていないか → ログアウトして再ログイン |
 
 ---
@@ -228,10 +228,12 @@ project_id / folder_id はダッシュボードの **Advanced Settings**、ま�
 | 操作の要点 | [ARIAKE_OCTA_操作マニュアル_簡易版.md](ARIAKE_OCTA_操作マニュアル_簡易版.md) §4A |
 | ROI の描き方（手動囲み・Erase・血管同定） | [roi_method.md](roi_method.md) |
 | 最終読影・トライアッド | [triad_recheck/README.md](triad_recheck/README.md) |
+| Mac 配布（v1.2.4。v1.2.3-mac は廃止） | [mac_v1.2.3_connection_error.md](mac_v1.2.3_connection_error.md) |
 
-公開配布ページ（ZIP・マニュアル）:
+公開配布:
 
-- https://github.com/yasuoyanagijp-maker/ARIAKE_OCTA-distribution
+- マニュアル: https://github.com/yasuoyanagijp-maker/ARIAKE_OCTA-distribution
+- **Mac フル ZIP（v1.2.4）:** https://github.com/yasuoyanagijp-maker/MNV_analysis_pro/releases/tag/v1.2.4-mac
 
 ---
 
@@ -248,8 +250,9 @@ GakuNin の PAT や施設データを、問い合わせメール以外のチャ�
 
 | 日付 | 内容 |
 |------|------|
+| 2026-10-20 | `v1.2.3-mac` を廃止とし、公開済み [v1.2.4-mac](https://github.com/yasuoyanagijp-maker/MNV_analysis_pro/releases/tag/v1.2.4-mac) へ誘導（右クリック「開く」のみ）。 |
 | 2026-08-21 | 初版。各サイト／Team YY 向け協働通知として、ルート A（施設内 2 名）・ルート B（1 名＋中央読影）、GakuNin フォルダ設計、ACL、採用ルールを記載。 |
-| 2026-08-29 | Connection Error（Mac）の第一対応を ad-hoc 再署名（xattr + codesign）に更新。新ZIP不要。 |
+| 2026-08-29 | Connection Error（Mac）の第一対応を ad-hoc 再署名（xattr + codesign）に更新。**v1.2.3 には適用しない**（2026-10-20 で訂正）。 |
 | 2026-08-28 | Connection Error はローカル解析エンジン未到達。Mac の `CODESIGNING Invalid Page`（未公証）と、病院業務用 Windows のファイアウォールは別原因。 |
 
 ---

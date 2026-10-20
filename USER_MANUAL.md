@@ -141,7 +141,7 @@ Web モードでは、フォルダ／画像の指定に **手動パス入力**�
 3. Institution code を選ぶ（中央読影なら `TEAM_YY`）。  
 4. Role を選ぶ（第1／第2／最終読影者）。  
 5. ログインボタンを押す。成功するとホーム（`/`）へ遷移する。  
-6. 失敗した場合は画面上のエラー文言を確認する。**「Connection Error: All connection attempts failed」はパスワード間違いではなく、同じ PC 内の解析エンジンに届いていない**状態です（§11）。「Invalid credentials」のときだけパスワードを見直してください。API（既定 `127.0.0.1:8000`）が起動しているかも確認します。
+6. 失敗した場合は画面上のエラー文言を確認する。**「Connection Error: All connection attempts failed」はパスワード間違いではなく、同じ PC 内の解析エンジンに届いていない**状態です（§11）。Mac で本リポジトリの **廃止済み `v1.2.3-mac`** を使っている場合は、[v1.2.4-mac](https://github.com/yasuoyanagijp-maker/MNV_analysis_pro/releases/tag/v1.2.4-mac) のフル ZIP に入れ直してください（手順: [mac_v1.2.3_connection_error.md](documentation/mac_v1.2.3_connection_error.md)）。「Invalid credentials」のときだけパスワードを見直してください。CUSTOM 施設コード（例: `MIE_UNIV`）の入力ミスではこの英文にはなりません。
 
 ### 開発者向け注意（DEV_MODE）
 
@@ -477,7 +477,7 @@ GakuNin RDM（プロジェクト配下）/
 | Web でフォルダが選べない | **仕様上、OS のフォルダダイアログは使えません。** 手動パス、サーバー側エクスプローラ、または **`FLET_USE_WEB=0`** でネイティブ起動を試す。 |
 | パスが通らない | パスが **API プロセスから見える**か（共有フォルダのマウント、権限）。 |
 | ログインできない | `DEV_MODE` ではないことを確認。API の認証とネットワークを確認。 |
-| **Connection Error: All connection attempts failed** | **パスワードや施設コードの誤りではありません。** ログイン画面の UI は出ても、同じ PC 内の解析エンジン（FastAPI）に届いていません。**Mac**（M1 等）では、現行配布（ad-hoc）が解析エンジン子プロセスをコード署名違反で殺すことがあります。**新しい ZIP は不要**です。Terminal で `xattr -cr /Applications/ARIAKE_OCTA.app` のあと `codesign --force --deep --sign - /Applications/ARIAKE_OCTA.app` を実行し、アプリを開き直してください（`xattr` だけでは直りません）。クラッシュレポートに `CODESIGNING` / `Invalid Page` があればこの原因です。それでもダメなら **Windows 版**。病院・電子カルテ用 Windows だけ失敗する場合は研究用端末へ。 |
+| **Connection Error: All connection attempts failed** | **パスワードや施設コードの誤りではありません。** ログイン画面の UI は出ても、同じ PC 内の解析エンジン（FastAPI）に届いていません。**本リポジトリの `v1.2.3-mac` は廃止。** Mac は [v1.2.4-mac](https://github.com/yasuoyanagijp-maker/MNV_analysis_pro/releases/tag/v1.2.4-mac) のフル ZIP（Apple Silicon: `ARIAKE_OCTA_mac.zip` / Intel: `ARIAKE_OCTA_macOS_Intel_v1.2.4.zip`）に入れ直す。古いアプリを削除 → 再ダウンロード → **`インストール.command` を右クリック →「開く」**。ターミナルの再署名は不要。手順は [mac_v1.2.3_connection_error.md](documentation/mac_v1.2.3_connection_error.md)。`v1.2.4-optovue-3mm-patch` はフルアプリではない。病院・電子カルテ用 Windows だけ失敗する場合は研究用端末へ。 |
 | 第2リーダーカードが出ない | Role が **第2リーダー** か。ログアウトして Role を選び直す。 |
 | 統合解析データボタンが無い | 先に **Save CSV** で第2 CSV を保存したか。 |
 | 最終読影者カードが出ない | Role が **最終読影者** か。ログアウトして Role を選び直す。 |
@@ -514,6 +514,7 @@ GakuNin RDM（プロジェクト配下）/
 
 ## 14. 関連ドキュメント
 
+- **Mac 配布（v1.2.4。v1.2.3-mac は廃止）:** [documentation/mac_v1.2.3_connection_error.md](documentation/mac_v1.2.3_connection_error.md) · [v1.2.4-mac リリース](https://github.com/yasuoyanagijp-maker/MNV_analysis_pro/releases/tag/v1.2.4-mac)
 - **操作の要点（Confirm Selection 等）:** [documentation/ARIAKE_OCTA_操作マニュアル_簡易版.md](documentation/ARIAKE_OCTA_操作マニュアル_簡易版.md)
 - **多施設グレーディング通知（各サイト／Team YY）:** [documentation/collaboration.md](documentation/collaboration.md)
 - **ROI の指定方法（手動囲み・Erase・着色画像／余白trim）:** [documentation/roi_method.md](documentation/roi_method.md)
@@ -527,7 +528,8 @@ GakuNin RDM（プロジェクト配下）/
 
 | 日付 | 内容 |
 |------|------|
-| 2026-08-29 | Connection Error（Mac）: 第一対応は新ZIPではなく `xattr` + ad-hoc `codesign --sign -`。`xattr` だけでは不十分。病院業務用 Windows のファイアウォールは別原因。 |
+| 2026-10-20 | Mac は公開済み [v1.2.4-mac](https://github.com/yasuoyanagijp-maker/MNV_analysis_pro/releases/tag/v1.2.4-mac) を使う。本リポジトリの `v1.2.3-mac` は廃止。入れ直しは右クリック「開く」のみ（ターミナル再署名なし）。[手順](documentation/mac_v1.2.3_connection_error.md)。 |
+| 2026-08-29 | Connection Error（Mac）: 当時の第一対応は新ZIPではなく `xattr` + ad-hoc `codesign --sign -`。**v1.2.3 には適用しない**（2026-10-20 で訂正）。病院業務用 Windows のファイアウォールは別原因。 |
 | 2026-08-28 | Connection Error: Mac で `CODESIGNING Invalid Page` なら現行配布（ad-hoc・未公証）が解析エンジン子プロセスを殺している。当面は Windows 版。病院業務用 Windows のファイアウォールは別原因。 |
 | 2026-08-21 | トライアッド確定時に **`*_triad_avg_fallback.csv`**（残NAを既存 G1/G2 平均で埋めた参考・暫定）を追加出力。§10.5.2・§10.5.3 を更新。 |
 | 2026-08-21 | 最終読影者が再読影した画像の**残数値 NA**をトライアッド中央値で補完。Subtype/Pathophysiology の NA は **Vsl Area 中央値のグレーダー**の分類を採用。§10.5.3 を更新。 |
