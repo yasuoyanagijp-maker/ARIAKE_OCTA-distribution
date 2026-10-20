@@ -13,6 +13,8 @@
 | macOS（Intel） | `ARIAKE_OCTA_macOS_Intel_*.zip` |
 | Windows | `ARIAKE_OCTA.zip` |
 
+**Mac v1.2.3 の既知の不具合:** ログイン画面は出ても、同時に「ARIAKE_OCTA quit unexpectedly」となり、ログインが **Connection Error: All connection attempts failed** になることがあります。パスワードや施設コード（CUSTOM 含む）の誤りではありません。同梱の `xattr` / `cp` / `open` だけでは直りません。説明と診断手順は [documentation/mac_v1.2.3_connection_error.md](documentation/mac_v1.2.3_connection_error.md)。Latest の `v1.2.4-optovue-3mm-patch` は v1.2.4 向けの小さなパッチで、v1.2.3 の代わりにはなりません。Mac は **v1.2.4 のフル ZIP**（本リポジトリ未掲載の場合は研究事務局へ）または Windows 版を使ってください。
+
 ## マニュアル
 
 | 内容 | リンク |
@@ -22,6 +24,7 @@
 | 詳細ユーザーマニュアル V2 | [documentation/ARIAKE_OCTA_詳細ユーザーマニュアル_V2.md](documentation/ARIAKE_OCTA_詳細ユーザーマニュアル_V2.md) |
 | 多施設グレーディング通知（各サイト／Team YY） | [documentation/collaboration.md](documentation/collaboration.md) |
 | ROI の指定方法（手動囲み・血管同定） | [documentation/roi_method.md](documentation/roi_method.md) |
+| Mac v1.2.3 起動クラッシュ / Connection Error | [documentation/mac_v1.2.3_connection_error.md](documentation/mac_v1.2.3_connection_error.md) |
 
 ## ログイン（初回起動時）
 
