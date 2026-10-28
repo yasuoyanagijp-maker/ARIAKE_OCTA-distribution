@@ -23,6 +23,23 @@
 | 多施設グレーディング通知（各サイト／Team YY） | [documentation/collaboration.md](documentation/collaboration.md) |
 | ROI の指定方法（手動囲み・血管同定） | [documentation/roi_method.md](documentation/roi_method.md) |
 
+## 操作ビデオ
+
+インストール（Mac/Windows）の手順ではなく、**解析画面の操作**を示したものです（日本語字幕・音声なし）。
+
+| 内容 | リンク | 目安 |
+|------|--------|------|
+| 第1グレーダー（Confirm Selection → ROI → 解析 → 結果保存） | [documentation/videos/ARIAKE_OCTA_howto.mp4](documentation/videos/ARIAKE_OCTA_howto.mp4) | 約1分10秒 |
+| 第2リーダー（ローカル自動スキャン・フォルダ指定） | [documentation/videos/ARIAKE_OCTA_grader2_folder.mp4](documentation/videos/ARIAKE_OCTA_grader2_folder.mp4) | 約12秒 |
+
+**第1グレーダー**
+
+<video controls src="documentation/videos/ARIAKE_OCTA_howto.mp4"></video>
+
+**第2リーダー（フォルダ指定）**
+
+<video controls src="documentation/videos/ARIAKE_OCTA_grader2_folder.mp4"></video>
+
 ## ログイン（初回起動時）
 
 - **ユーザー名**: ローマ字表記  
